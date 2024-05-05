@@ -109,14 +109,14 @@ def columnar_decrypt(ciphertext, key):
 
 # Rail Fence Cipher
 def rail_encrypt(plaintext, key):
- 
+    plaintext = plaintext.replace(" ", "_")
+    
     rail = [['\n' for i in range(len(plaintext))] for j in range(key)]
      
     dir_down = False
     row, col = 0, 0
      
     for i in range(len(plaintext)):
-         
         if (row == 0) or (row == key - 1):
             dir_down = not dir_down
          
@@ -135,10 +135,9 @@ def rail_encrypt(plaintext, key):
             if rail[i][j] != '\n':
                 result.append(rail[i][j])
 
-    return("" . join(result))
+    return "".join(result)
      
 def rail_decrypt(ciphertext, key):
- 
     rail = [['\n' for i in range(len(ciphertext))] for j in range(key)]
      
     dir_down = None
@@ -162,8 +161,7 @@ def rail_decrypt(ciphertext, key):
 
     for i in range(key):
         for j in range(len(ciphertext)):
-            if ((rail[i][j] == '*') and
-            (index < len(ciphertext))):
+            if ((rail[i][j] == '*') and (index < len(ciphertext))):
                 rail[i][j] = ciphertext[index]
                 index += 1
          
@@ -173,10 +171,10 @@ def rail_decrypt(ciphertext, key):
     for i in range(len(ciphertext)):
         if row == 0:
             dir_down = True
-        if row == key-1:
+        if row == key - 1:
             dir_down = False
              
-        if (rail[row][col] != '*'):
+        if rail[row][col] != '*':
             result.append(rail[row][col])
             col += 1
              
@@ -184,7 +182,12 @@ def rail_decrypt(ciphertext, key):
             row += 1
         else:
             row -= 1
-    return("".join(result))
+
+    result = "".join(result).replace("_", " ")
+    
+    return result
+
+
 
 # GUI
 def encrypt_button_click():
