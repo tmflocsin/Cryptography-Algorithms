@@ -197,17 +197,32 @@ def encrypt_button_click():
         return
 
     if selected_algorithm == "Baconian Cipher":
+        if not plaintext.isalpha():
+            messagebox.showwarning("Warning", "Baconian Cipher cannot represent spaces or special characters.")
+            return
         cipher_text = baconian_encrypt(plaintext)
     elif selected_algorithm == "One Time Pad Cipher":
+        if not isinstance(key, str) or not key.strip():
+            messagebox.showwarning("Warning", "The key for One Time Pad Cipher must be a string.")
+            return
         if len(plaintext) != len(key):
             messagebox.showwarning("Warning", "The length of the key must be the same as the length of the message.")
             return
         cipher_text = one_time_pad_encrypt(plaintext, key)
     elif selected_algorithm == "Caesar Cipher":
+        if not key.isdigit():
+            messagebox.showwarning("Warning", "The key for Caesar Cipher must be a number.")
+            return
         cipher_text = caesar_encrypt(plaintext, int(key))
     elif selected_algorithm == "Columnar Transposition Cipher":
+        if not isinstance(key, str) or not key.strip():
+            messagebox.showwarning("Warning", "The key for Columnar Transposition Cipher must be a string.")
+            return
         cipher_text = columnar_encrypt(plaintext, key)
     elif selected_algorithm == "Rail Fence Cipher":
+        if not key.isdigit():
+            messagebox.showwarning("Warning", "The key for Rail Fence Cipher must be a number.")
+            return
         cipher_text = rail_encrypt(plaintext, int(key))
 
     result_text.config(state=tk.NORMAL)
@@ -225,14 +240,29 @@ def decrypt_button_click():
         return
 
     if selected_algorithm == "Baconian Cipher":
+        if not ciphertext.isalpha():
+            messagebox.showwarning("Warning", "Baconian Cipher cannot represent spaces or special characters.")
+            return
         decrypted_text = baconian_decrypt(ciphertext)
     elif selected_algorithm == "One Time Pad Cipher":
+        if not isinstance(key, str) or not key.strip():
+            messagebox.showwarning("Warning", "The key for One Time Pad Cipher must be a string.")
+            return
         decrypted_text = one_time_pad_decrypt(ciphertext, key)
     elif selected_algorithm == "Caesar Cipher":
+        if not key.isdigit():
+            messagebox.showwarning("Warning", "The key for Caesar Cipher must be a number.")
+            return
         decrypted_text = caesar_decrypt(ciphertext, int(key))
     elif selected_algorithm == "Columnar Transposition Cipher":
+        if not isinstance(key, str) or not key.strip():
+            messagebox.showwarning("Warning", "The key for Columnar Transposition Cipher must be a string.")
+            return
         decrypted_text = columnar_decrypt(ciphertext, key)
     elif selected_algorithm == "Rail Fence Cipher":
+        if not key.isdigit():
+            messagebox.showwarning("Warning", "The key for Rail Fence Cipher must be a number.")
+            return
         decrypted_text = rail_decrypt(ciphertext, int(key))
 
     result_text.config(state=tk.NORMAL)
@@ -243,15 +273,14 @@ def decrypt_button_click():
 def clear_button_click():
     plaintext_text.delete("1.0", tk.END)
     key_text.delete("1.0", tk.END)
-    algorithm_combobox.set('')  # Clear the selected algorithm in the dropdown box
+    algorithm_combobox.set('')  
     result_text.config(state=tk.NORMAL)
     result_text.delete("1.0", tk.END)
     result_text.config(state=tk.DISABLED)
 
-
 root = tk.Tk()
 root.title("Cryptography Toolbox")
-root.geometry("800x500")
+root.geometry("600x400")  # Set the smaller window size
 
 style = ttk.Style()
 style.configure("TLabel", font=("Arial", 12))
@@ -259,11 +288,11 @@ style.configure("TButton", font=("Arial", 12))
 style.configure("TCombobox", font=("Arial", 12))
 style.configure("TText", font=("Arial", 12))
 
-main_frame = ttk.Frame(root, padding=20)
+main_frame = ttk.Frame(root, padding=10)
 main_frame.pack(fill=tk.BOTH, expand=True)
 
 algorithm_label = ttk.Label(main_frame, text="Select Algorithm:")
-algorithm_label.grid(row=0, column=0, padx=10, pady=10)
+algorithm_label.pack(pady=5)
 
 algorithms = [
     "Baconian Cipher",
@@ -272,23 +301,24 @@ algorithms = [
     "Columnar Transposition Cipher",
     "Rail Fence Cipher"
 ]
-algorithm_combobox = ttk.Combobox(main_frame, values=algorithms, width=50)
-algorithm_combobox.grid(row=0, column=1, padx=10, pady=10)
+
+algorithm_combobox = ttk.Combobox(main_frame, values=algorithms, width=40)
+algorithm_combobox.pack(pady=5)
 
 plaintext_label = ttk.Label(main_frame, text="Enter Text:")
-plaintext_label.grid(row=1, column=0, padx=10, pady=10)
+plaintext_label.pack(pady=5)
 
-plaintext_text = tk.Text(main_frame, width=50, height=5, font=("Arial", 12))
-plaintext_text.grid(row=1, column=1, padx=10, pady=10)
+plaintext_text = tk.Text(main_frame, width=60, height=2, font=("Arial", 12))
+plaintext_text.pack(pady=5)
 
 key_label = ttk.Label(main_frame, text="Enter Key:")
-key_label.grid(row=2, column=0, padx=10, pady=10)
+key_label.pack(pady=5)
 
-key_text = tk.Text(main_frame, width=50, height=2, font=("Arial", 12))
-key_text.grid(row=2, column=1, padx=10, pady=10)
+key_text = tk.Text(main_frame, width=60, height=2, font=("Arial", 12))
+key_text.pack(pady=5)
 
 buttons_frame = ttk.Frame(main_frame)
-buttons_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+buttons_frame.pack(pady=10)
 
 encrypt_button = ttk.Button(buttons_frame, text="Encrypt", command=encrypt_button_click)
 encrypt_button.pack(side=tk.LEFT, padx=5)
@@ -299,7 +329,7 @@ decrypt_button.pack(side=tk.LEFT, padx=5)
 clear_button = ttk.Button(buttons_frame, text="Clear", command=clear_button_click)
 clear_button.pack(side=tk.LEFT, padx=5)
 
-result_text = tk.Text(main_frame, height=10, width=80, font=("Arial", 12), state=tk.DISABLED, bg="#f0f0f0")
-result_text.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+result_text = tk.Text(main_frame, height=8, width=70, font=("Arial", 12), state=tk.DISABLED, bg="#f0f0f0")
+result_text.pack(pady=10)
 
 root.mainloop()
