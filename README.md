@@ -1,6 +1,9 @@
 # 🔐 Cryptography Algorithms
+<div align="center">
+  <img width="340" height="327" alt="Screenshot 2025-12-16 085307" src="https://github.com/user-attachments/assets/0096cc48-b3ac-489f-9d1f-3616d4edf375" />
+</div>
 
-A user-friendly GUI application built with Tkinter that implements five classical encryption algorithms for educational and experimentation purposes. Users select an algorithm, input plaintext/ciphertext and keys, then encrypt or decrypt with validation for correct inputs.
+A GUI application built with Tkinter that implements five classical encryption algorithms for educational and experimentation purposes. Users select an algorithm, input plaintext/ciphertext and keys, then encrypt or decrypt with validation for correct inputs.
 
 ## ✨ Features
 - **Baconian Cipher** - 5-bit A/B encoding for letters only
